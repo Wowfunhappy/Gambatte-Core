@@ -125,8 +125,10 @@ public:
 {
     size_t samples = 2064;
 
-    while (gb.runFor(videoBuffer, 160, inSoundBuffer, samples) == -1)
+    while (gb.runFor(videoBuffer, 160, inSoundBuffer, samples) == -1) {
         [self outputAudio:samples];
+        samples = 2064;
+    }
 
     [self outputAudio:samples];
 }
