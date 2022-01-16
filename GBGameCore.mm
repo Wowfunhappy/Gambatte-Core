@@ -68,6 +68,7 @@ public:
 {
     if((self = [super init]))
     {
+        videoBuffer = (uint32_t *)malloc(160 * 144 * 4);
         inSoundBuffer = (uint32_t *)malloc(2064 * 2 * 4);
         outSoundBuffer = (int16_t *)malloc(2064 * 2 * 2);
         displayMode = 0;
@@ -151,13 +152,9 @@ public:
 
 # pragma mark - Video
 
-- (const void *)getVideoBufferWithHint:(void *)hint
+- (const void *)videoBuffer
 {
-    if (!hint) {
-        if (!videoBuffer) videoBuffer = (uint32_t *)malloc(160 * 144 * 4);
-        hint = videoBuffer;
-    }
-    return videoBuffer = (uint32_t*)hint;
+    return videoBuffer;
 }
 
 - (OEIntRect)screenRect
@@ -183,6 +180,11 @@ public:
 - (GLenum)pixelType
 {
     return GL_UNSIGNED_INT_8_8_8_8_REV;
+}
+
+- (GLenum)internalPixelFormat
+{
+    return GL_RGB8;
 }
 
 # pragma mark - Audio
